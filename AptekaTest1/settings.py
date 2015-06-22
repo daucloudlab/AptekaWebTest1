@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apteka',
+    'medikament',
 )
 
 MIDDLEWARE_CLASSES = (
