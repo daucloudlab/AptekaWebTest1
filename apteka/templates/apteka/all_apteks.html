@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+
+</head>
+<body>
+
+<ul id = "test">
+
+</ul>
+
+
+
+
+<script type="text/javascript">
+    Parse.initialize("yMnjSWvajnQ10B9oDidOmBA2dH7FrFh4SXeFaXiy",
+      "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
+
+	var Apteka = Parse.Object.extend("Apteka");
+	var query = new Parse.Query(Apteka) ;
+	query.find(
+            {
+                success : function(results){
+                    for(var i = 0; i < results.length; i++){
+                        var object = results[i] ;
+                        var aptekaName = object.get('name') ;
+                        var aptekaPhone = object.get('phone') ;
+                        var address = object.get('address') ;
+                        var latitude = object.get('latitude') ;
+                        var longitude = object.get('longitude') ;
+                        $("#test").append(
+                                "<li>" + aptekaName + "<br>" + aptekaPhone + "<br>" + address +
+                                "<br>" + latitude + ", " + longitude + "<br>" + "</li>") ;
+                    }
+
+                },
+                error : function(error){
+                    alert("ERRROR!!!") ;
+                }
+            }
+    ) ;
+
+</script>
+
+</body>
+</html>
