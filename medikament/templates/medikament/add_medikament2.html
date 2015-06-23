@@ -9,15 +9,20 @@
 </head>
 <body>
 
-<form id = "medikament_add_form" action = "" enctype="multipart/form-data">
+<form id = "medikament_add_form" action = "/medikament/" enctype="multipart/form-data">
 
     <input type = "text" id = "title" name = "title" />
     <input type = "text" id = "description" name="description" />
     <input type = "text" id = "price" name = "price" />
     <select id = "category" name="category">
         <option value = "1">Лекарственные преператы</option>
-        <option value="2">Для мам и детей</option>
-        <option value="3">Витамины и бад</option>
+        <option value="2">Травы, фито чаи</option>
+        <option value="3">Добавки и витамины</option>
+        <option value="4">Интим и здоровье</option>
+        <option value="5">Медтехника</option>
+        <option value="6">Для мам и детей</option>
+        <option value="7">Красота и уход</option>
+        <option value="8">Разное</option>
     </select>
     <select name = "apteks" id = "apteka_choice">
     </select>
@@ -45,11 +50,11 @@
                         $("#apteka_choice").
                                 append("<option value = " + id + ">" + name + "</option>") ;
                     }
-                    alert("SUCCESS!!! ") ;
+
 
                 },
                 error : function(error){
-                    alert("ERRROR!!!") ;
+
                 }
             }
     ) ;
@@ -61,7 +66,7 @@
 		    var price = parseFloat($("#price").val()) ;
             var category = $("#category").val() ;
             var apteka_choice = $("#apteka_choice").val() ;
-            alert("category = " + category + " apteka_choice = " + apteka_choice) ;
+
 
             var img_file_control = $("#img_file")[0] ;
             if (img_file_control.files.length > 0) {
@@ -71,10 +76,10 @@
 
                 parseImageFile.save().then(function () {
                     // The file has been saved to Parse.
-                    alert("IMAGE SAVE SUCCESS!!!");
+
                 }, function (error) {
                     // The file either could not be read, or could not be saved to Parse.
-                    alert("IMAGE SAVE ERRRO!!!");
+
                 });
             }
 
@@ -87,10 +92,10 @@
 
                 parseInfoFile.save().then(function () {
                     // The file has been saved to Parse.
-                    alert("File SAVE SUCCESS!!!");
+
                 }, function (error) {
                     // The file either could not be read, or could not be saved to Parse.
-                    alert("File SAVE ERRRO!!!");
+
                 });
             }
 

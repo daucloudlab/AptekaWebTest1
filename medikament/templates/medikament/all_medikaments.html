@@ -25,7 +25,6 @@
 	query.find(
             {
                 success : function(results){
-                    alert('SUCCESS!!!!!') ;
                     for(var i = 0; i < results.length; i++){
                         var object = results[i] ;
                         var title = object.get('title') ;
@@ -34,7 +33,6 @@
 
                 },
                 error : function(error){
-                    alert("ERRROR!!!") ;
                 }
             }
     ) ;

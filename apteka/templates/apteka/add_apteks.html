@@ -3,17 +3,65 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+
 </head>
 <body>
 
 
-<form action="/apteka/add_process/" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type = "submit" value="Сохранить" />
+<form id = "apteka_add_form" action = "/apteka/">
+
+    <input type = "text" id = "name" name = "name" />
+    <input type = "text" id = "phone" name="phone" />
+    <input type = "text" id = "address" name = "address" />
+    <input type = "text" id = "latitude" name = "latitude" />
+    <input type = "text" id = "longitude" name = "longitude" />
+    <input type="submit" value = "Сохранить" />
 </form>
 
 
+
+
+
+
+<script type="text/javascript">
+    Parse.initialize("yMnjSWvajnQ10B9oDidOmBA2dH7FrFh4SXeFaXiy",
+      "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
+
+
+    $("#apteka_add_form").on("submit", function(e){
+			e.preventDefault() ;
+			var name = $("#name").val() ;
+			var phone = $("#phone").val() ;
+            var address = $("#address").val() ;
+		    var latitude = parseFloat($("#latitude").val()) ;
+            var longitude = parseFloat($("#longitude").val()) ;
+
+            var Apteka = Parse.Object.extend("Apteka") ;
+            var apteka = new Apteka() ;
+
+			apteka.set("name", name);
+			apteka.set("phone", phone);
+            apteka.set("address", address) ;
+            apteka.set("latitude", latitude) ;
+            apteka.set("longitude", longitude) ;
+			apteka.save(null, {
+  				success: function(apteka) {
+    			// Execute any logic that should take place after the object is saved.
+    			alert('New object created with objectId: ' + apteka.id);
+  			},
+  				error: function(apteka, error) {
+    				// Execute any logic that should take place if the save fails.
+    				// error is a Parse.Error with an error code and description.
+    				alert('Failed to create new object, with error code: ' + error.description);
+  	}
+});
+
+		}) ;
+
+
+</script>
 
 
 </body>
