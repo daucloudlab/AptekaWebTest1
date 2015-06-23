@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+
+</head>
+<body>
+
+<form id = "medikament_add_form" action = "" enctype="multipart/form-data">
+
+    <input type = "text" id = "title" name = "title" />
+    <input type = "text" id = "description" name="description" />
+    <input type = "text" id = "price" name = "price" />
+    <select id = "category" name="category">
+        <option value = "1">Лекарственные преператы</option>
+        <option value="2">Для мам и детей</option>
+        <option value="3">Витамины и бад</option>
+    </select>
+    <select name = "apteks" id = "apteka_choice">
+    </select>
+    <input type = "file" id = "img_file" name = "image" />
+    <input type = "file" id = "info_file" name = "info" />
+
+    <input type="submit" value = "Сохранить" />
+</form>
+
+
+<script type="text/javascript">
+    Parse.initialize("yMnjSWvajnQ10B9oDidOmBA2dH7FrFh4SXeFaXiy",
+      "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
+
+	var Apteka = Parse.Object.extend("Apteka");
+	var query = new Parse.Query(Apteka) ;
+	query.find(
+            {
+                success : function(results){
+                    alert('SUCCESS!!!!!') ;
+                    for(var i = 0; i < results.length; i++){
+                        var object = results[i] ;
+                        var id = object.id ;
+                        var name = object.get('name') ;
+                        $("#apteka_choice").
+                                append("<option value = " + id + ">" + name + "</option>") ;
+                    }
+                    alert("SUCCESS!!! ") ;
+
+                },
+                error : function(error){
+                    alert("ERRROR!!!") ;
+                }
+            }
+    ) ;
+
+    $("#medikament_add_form").on("submit", function(e){
+			e.preventDefault() ;
+			var title = $("#title").val() ;
+			var description = $("#description").val() ;
+		    var price = parseFloat($("#price").val()) ;
+            var category = $("#category").val() ;
+            var apteka_choice = $("#apteka_choice").val() ;
+            alert("category = " + category + " apteka_choice = " + apteka_choice) ;
+
+            var img_file_control = $("#img_file")[0] ;
+            if (img_file_control.files.length > 0) {
+                var img_file = img_file_control.files[0];
+                var img_name = "photo.jpg";
+                var parseImageFile = new Parse.File(img_name, img_file);
+
+                parseImageFile.save().then(function () {
+                    // The file has been saved to Parse.
+                    alert("IMAGE SAVE SUCCESS!!!");
+                }, function (error) {
+                    // The file either could not be read, or could not be saved to Parse.
+                    alert("IMAGE SAVE ERRRO!!!");
+                });
+            }
+
+
+            var info_file_control = $("#info_file")[0] ;
+            if (info_file_control.files.length > 0) {
+                var info_file = info_file_control.files[0];
+                var info_name = "info.txt";
+                var parseInfoFile = new Parse.File(info_name, info_file);
+
+                parseInfoFile.save().then(function () {
+                    // The file has been saved to Parse.
+                    alert("File SAVE SUCCESS!!!");
+                }, function (error) {
+                    // The file either could not be read, or could not be saved to Parse.
+                    alert("File SAVE ERRRO!!!");
+                });
+            }
+
+
+            var Apteka = Parse.Object.extend("Apteka") ;
+            var apteka = new Apteka() ;
+			var Medikament = Parse.Object.extend("Medikament");
+			var medikament = new Medikament();
+
+			medikament.set("title", title);
+			medikament.set("description", description);
+            medikament.set("price", price) ;
+            medikament.set("category_id", category) ;
+            apteka.id = apteka_choice ;
+            medikament.set("apteka_rel", apteka) ;
+            medikament.set("image", parseImageFile) ;
+            medikament.set("information", parseInfoFile) ;
+			medikament.save(null, {
+  				success: function(medikament) {
+    			// Execute any logic that should take place after the object is saved.
+    			alert('New object created with objectId: ' + medikament.id);
+  			},
+  				error: function(medikament, error) {
+    				// Execute any logic that should take place if the save fails.
+    				// error is a Parse.Error with an error code and description.
+    				alert('Failed to create new object, with error code: ' + error.description);
+  	}
+});
+
+		}) ;
+
+
+</script>
+
+
+</body>
+</html>

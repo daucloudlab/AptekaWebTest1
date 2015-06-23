@@ -15,9 +15,36 @@
       "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
     var title = "{{ title }}" ;
     var category = "{{ category }}" ;
-    alert("category = " + category) ;
+
     var apteka = "{{ apteka }}" ;
-    alert("apteka = " + apteka) ;
+    var image = "{{ image }}" ;
+    var image_file = image.files[0] ;
+    var name = "photo.jpg" ;
+    var parseFile = new Parse.File(name, image_file) ;
+{#    parseFile.save().then(function(){#}
+{#        alert("IMAGE SUCCESS") ;#}
+{#    }, function (error){#}
+{#        alert("IMAGE ERROR") ;#}
+{#    }) ;#}
+
+    var Medikament = Parse.Object.extend("Medikament");
+	var medikament = new Medikament();
+
+	medikament.set("image", parseFile);
+	gameScore.save(null, {
+  	success: function(medikament) {
+    	// Execute any logic that should take place after the object is saved.
+    	alert('IMage SUCCESS!!!');
+  	},
+  	error: function(medikament, error) {
+    	// Execute any logic that should take place if the save fails.
+    	// error is a Parse.Error with an error code and description.
+    	alert('Failed to create new object, with error code: ' + error.description);
+  	}
+});
+{#    var img = new Image() ;#}
+{#    img.src = "{{ image }}" ;#}
+{#    alert("image src = " + img) ;#}
 
 {#    var Apteka = Parse.Object.extend("Apteka");#}
 {#	var apteka = new Apteka() ;#}

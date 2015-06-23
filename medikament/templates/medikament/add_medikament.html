@@ -16,7 +16,7 @@
 </form>
 -->
 
-<form action = "/medikament/add_process/" method="POST">
+<form action = "/medikament/add_process/" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <input type = "text" name = "title" />
     <input type = "text" name="description" />
@@ -28,6 +28,7 @@
     </select>
     <select name = "apteks" id = "apteka_choice">
     </select>
+    <input type = "file" name = "image" />
 
     <input type="submit" value = "Сохранить" />
 </form>
