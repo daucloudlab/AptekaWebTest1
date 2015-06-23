@@ -10,3 +10,6 @@ def all_apteks(request):
 def add_apteks(request):
     return render(request, 'apteka/add_apteks.html')
 
+def del_apteks(request):
+    return render(request, 'apteka/del_apteks.html')
+

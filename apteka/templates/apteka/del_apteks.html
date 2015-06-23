@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+
+</head>
+<body>
+
+<form id = "apteka_delete_form">
+<select name = "apteks" id = "apteka_choice">
+    </select>
+<input type = "submit" id = "submit" value="Удалить" />
+</form>
+
+<script type="text/javascript">
+    Parse.initialize("yMnjSWvajnQ10B9oDidOmBA2dH7FrFh4SXeFaXiy",
+      "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
+
+    var Apteka = Parse.Object.extend("Apteka");
+	var query = new Parse.Query(Apteka) ;
+    query.find(
+            {
+                success : function(results){
+
+                    for(var i = 0; i < results.length; i++){
+                        var object = results[i] ;
+                        var id = object.id ;
+                        var name = object.get('name') ;
+                        $("#apteka_choice").
+                                append("<option value = " + id + ">" + name + "</option>") ;
+                    }
+
+
+                },
+                error : function(error){
+
+                }
+            }
+    ) ;
+
+    $("#apteka_delete_form").on("submit", function(e){
+        e.preventDefault() ;
+
+        var apteka_choice = $("#apteka_choice").val() ;
+
+        var Medikament = Parse.Object.extend("Medikament");
+        var innerQuery = new Parse.Query(Apteka);
+        innerQuery.equalTo("objectId", apteka_choice) ;
+        var medikament_query = new Parse.Query(Medikament);
+        medikament_query.matchesQuery("apteka_rel", innerQuery);
+        medikament_query.find({
+            success: function(medikaments) {
+                for(var i = 0; i < medikaments.length; i++) {
+                    var medikament = medikaments[i];
+                    medikament.destroy({
+                        success:function(){},
+                        error : function(error){}
+                    }) ;
+                }
+
+            },
+            error : function(error){}
+        });
+
+
+        var del_query = new Parse.Query(Apteka) ;
+        del_query.get(apteka_choice, {
+            success : function(apteka){
+                apteka.destroy({
+                    success : function(){
+                        alert(" Аптека удалена") ;
+                    },
+                    error : function(error){
+                        alert("Ошибка! Аптека не удалена!") ;
+                    }
+                }) ;
+            },
+            error : function(apteka, error){
+
+            }
+        }) ;
+
+
+    }) ;
+
+
+
+
+</script>
+</body>
+</html>
