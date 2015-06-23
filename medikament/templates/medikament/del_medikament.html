@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+
+</head>
+<body>
+
+<form id = "medikament_delete_form">
+<select name = "apteks" id = "apteka_choice"></select>
+    <select name = "medikaments" id = "medikament_choice"></select>
+<input type = "submit" id = "submit" value="Удалить" />
+</form>
+
+<script type="text/javascript">
+    Parse.initialize("yMnjSWvajnQ10B9oDidOmBA2dH7FrFh4SXeFaXiy",
+      "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
+
+
+
+    var Apteka = Parse.Object.extend("Apteka");
+	var apteka_query = new Parse.Query(Apteka) ;
+    apteka_query.find(
+            {
+                success : function(results){
+
+                    for(var i = 0; i < results.length; i++){
+                        var object = results[i] ;
+                        var id = object.id ;
+                        var name = object.get('name') ;
+                        $("#apteka_choice").
+                                append("<option value = " + id + ">" + name + "</option>") ;
+                    }
+
+
+                },
+                error : function(error){
+
+                }
+            }
+    ) ;
+
+$("#apteka_choice").change(function (){
+    $("#medikament_choice").empty() ;
+    var apteka_choice = $("#apteka_choice").val() ;
+    alert("apteka id = " + apteka_choice) ;
+    var Medikament = Parse.Object.extend("Medikament");
+	var medikament_query = new Parse.Query(Medikament) ;
+    var apteka_query2 = new Parse.Query(Apteka) ;
+    apteka_query2.equalTo("objectId", apteka_choice) ;
+    medikament_query.matchesQuery("apteka_rel", apteka_query2);
+    medikament_query.find(
+            {
+                success : function(results){
+
+                    for(var i = 0; i < results.length; i++){
+                        var object = results[i] ;
+                        var id = object.id ;
+                        var title = object.get('title') ;
+                        $("#medikament_choice").
+                                append("<option value = " + id + ">" + title + "</option>") ;
+                    }
+
+
+                },
+                error : function(error){
+
+                }
+            }
+    ) ;
+
+
+}) ;
+
+    $("#medikament_delete_form").on("submit", function(e) {
+        e.preventDefault();
+
+        var medikament_choice = $("#medikament_choice").val();
+
+        var MedikamentClass = Parse.Object.extend("Medikament");
+        var medikament_query_del = new Parse.Query(MedikamentClass);
+
+        medikament_query_del.get(medikament_choice, {
+            success : function(medikament){
+                alert("Медикамент удален") ;
+                medikament.destroy({
+                    success : function(){},
+                    error : function(){}
+                }) ;
+
+
+            },
+            error : function (medikament, error) {
+                
+            }
+        }) ;
+    }) ;
+
+
+
+
+</script>
+
+
+</body>
+</html>
