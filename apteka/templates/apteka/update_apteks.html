@@ -1,0 +1,85 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
+
+</head>
+<body>
+
+<form id = "apteka_update_form" method="POST">
+    <input type = "text" id = "name" name = "name" />
+    <input type = "text" id = "phone" name="phone" />
+    <input type = "text" id = "address" name = "address" />
+    <input type = "text" id = "latitude" name = "latitude" />
+    <input type = "text" id = "longitude" name = "longitude" />
+    <input type="submit" value = "update" />
+</form>
+
+
+<script type="text/javascript">
+    Parse.initialize("yMnjSWvajnQ10B9oDidOmBA2dH7FrFh4SXeFaXiy",
+      "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
+
+    var Apteka = Parse.Object.extend("Apteka");
+	var query = new Parse.Query(Apteka) ;
+    id = "{{ id }}" ;
+    query.get(id,{
+        success : function(apteka){
+            old_name = apteka.get('name') ;
+            old_phone = apteka.get('phone') ;
+            old_address = apteka.get('address') ;
+            old_latitude = apteka.get('latitude') ;
+            old_longitude = apteka.get('longitude') ;
+
+            $("#name").attr('value', old_name) ;
+            $("#phone").attr('value', old_phone) ;
+            $("#address").attr('value', old_address) ;
+            $("#latitude").attr('value', old_latitude) ;
+            $("#longitude").attr('value', old_longitude) ;
+        },
+        error : function(apteka, error){
+
+        }
+    }) ;
+
+    $("#apteka_update_form").on("submit", function(e){
+        e.preventDefault() ;
+        var name = $("#name").val() ;
+		var phone = $("#phone").val() ;
+        var address = $("#address").val() ;
+        var latitude = parseFloat($("#latitude").val()) ;
+        var longitude = parseFloat($("#longitude").val()) ;
+
+        var update_query = new Parse.Query(Apteka) ;
+        update_query.get(id,{
+        success : function(apteka){
+            apteka.set('name', name) ;
+            apteka.set('phone', phone) ;
+            apteka.set('address', address) ;
+            apteka.set('latitude', latitude) ;
+            apteka.set('longitude', longitude) ;
+            apteka.save() ;
+            alert("Данные аптеки обновился") ;
+            window.location.replace("http://127.0.0.1:8000/apteka/") ;
+        },
+        error : function(apteka, error){
+            alert("Ошибка при обновлений " + error.description) ;
+        }
+    }) ;
+
+
+
+    });
+
+</script>
+</body>
+</html>

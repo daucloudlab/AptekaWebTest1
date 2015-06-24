@@ -12,3 +12,7 @@ def add_apteks(request):
 def del_apteks(request):
     return render(request, 'apteka/del_apteks.html')
 
+def update_apteks(request, id):
+    return render(request, 'apteka/update_apteks.html', {'id':id})
+
+

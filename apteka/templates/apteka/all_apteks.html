@@ -57,7 +57,7 @@
                         var address = object.get('address') ;
                         var latitude = object.get('latitude') ;
                         var longitude = object.get('longitude') ;
-                        $("#col1").append(aptekaName + "<br>") ;
+                        $("#col1").append("<a href = 'http://127.0.0.1:8000/apteka/update/" +object.id + "'>" + aptekaName + "</a><br>") ;
                         $("#col2").append(aptekaPhone + "<br>") ;
                         $("#col3").append(address + "<br>") ;
                         $("#col4").append(latitude + "<br>") ;
