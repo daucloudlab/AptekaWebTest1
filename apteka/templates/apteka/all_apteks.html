@@ -53,13 +53,10 @@
                         var address = object.get('address') ;
                         var latitude = object.get('latitude') ;
                         var longitude = object.get('longitude') ;
-                        $("#tbody").append("<tr>") ;
-                        $("#tbody").append("<td><a href = 'http://127.0.0.1:8000/apteka/update/" +object.id + "'>" + aptekaName + "</a></td>") ;
-                        $("#tbody").append("<td>"+aptekaPhone + "</td>") ;
-                        $("#tbody").append("<td>"+address + "</td>") ;
-                        $("#tbody").append("<td>"+latitude + "</td>") ;
-                        $("#tbody").append("<td>"+longitude + "</td>") ;
-                        $("#tbody").append("</tr>") ;
+
+                        $("#tbody").append("<tr><td><a href='http://127.0.0.1:8000/apteka/update/"+object.id+"'>"+aptekaName+"</a></td>"+
+                                        "<td>"+aptekaPhone+"</td>"+"<td>"+address+"</td>"+"<td>"+latitude+"</td>"+"<td>"+longitude+"</td>"+
+                                        "</tr>") ;
                     }
 
                 },
