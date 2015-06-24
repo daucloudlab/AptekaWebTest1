@@ -17,7 +17,7 @@
 <body>
 
 
-<table class="table table-bordered" >
+<table class="table table-striped" >
 
    <thead>
       <tr>
@@ -26,6 +26,8 @@
          <th>Адрес</th>
          <th>Latitude</th>
          <th>Longitude</th>
+          <th></th>
+          <th></th>
       </tr>
    </thead>
 
@@ -56,7 +58,8 @@
 
                         $("#tbody").append("<tr><td><a href='http://127.0.0.1:8000/apteka/update/"+object.id+"'>"+aptekaName+"</a></td>"+
                                         "<td>"+aptekaPhone+"</td>"+"<td>"+address+"</td>"+"<td>"+latitude+"</td>"+"<td>"+longitude+"</td>"+
-                                        "</tr>") ;
+                                        "<td><button type='button' class='btn btn-primary'>"+"Редактировать"+"</button></td>"+
+                                        "<td><button type='button' class='btn btn-danger'>"+"Удалить"+"</button></td>"+"</tr>") ;
                     }
 
                 },
@@ -66,7 +69,16 @@
             }
     ) ;
 
+    $("#tbody").on('click','.btn-primary',function(){
+        alert("Басылды") ;
+    }) ;
+
+    $("#tbody").on('click','.btn-danger',function(){
+        alert("Басылды2") ;
+    }) ;
 </script>
+
+
 
 </body>
 </html>
