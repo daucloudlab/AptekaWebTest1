@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -6,30 +7,59 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
+
 </head>
 <body>
 
-<form id = "medikament_add_form" action = "/medikament/" enctype="multipart/form-data">
+<form id = "medikament_add_form" action = "/medikament/" enctype="multipart/form-data" method = "POST">
+    {% csrf_token %}
+    <div class = "container">
 
-    <input type = "text" id = "title" name = "title" />
-    <input type = "text" id = "description" name="description" />
-    <input type = "text" id = "price" name = "price" />
-    <select id = "category" name="category">
-        <option value = "1">Лекарственные преператы</option>
-        <option value="2">Травы, фито чаи</option>
-        <option value="3">Добавки и витамины</option>
-        <option value="4">Интим и здоровье</option>
-        <option value="5">Медтехника</option>
-        <option value="6">Для мам и детей</option>
-        <option value="7">Красота и уход</option>
-        <option value="8">Разное</option>
-    </select>
-    <select name = "apteks" id = "apteka_choice">
-    </select>
-    <input type = "file" id = "img_file" name = "image" />
-    <input type = "file" id = "info_file" name = "info" />
+    <div class = "col-md-10">
+        <label for = "title">Название медикамента: </label><br>
+        <input type = "text" id = "title" name = "title" />
+        <br>
 
-    <input type="submit" value = "Сохранить" />
+        <label for = "description">Свойства: </label><br>
+        <input type = "text" id = "description" name="description" />
+        <br>
+
+        <label for = "category">Выберите категорию медикамента:</label><br>
+        <select id = "category" name="category">
+            <option value = "1">Лекарственные преператы</option>
+            <option value="2">Травы, фито чаи</option>
+            <option value="3">Добавки и витамины</option>
+            <option value="4">Интим и здоровье</option>
+            <option value="5">Медтехника</option>
+            <option value="6">Для мам и детей</option>
+            <option value="7">Красота и уход</option>
+            <option value="8">Разное</option>
+        </select>
+        <br>
+
+        <label for = "apteka_choice">Выберите аптеку: </label><br>
+        <select name = "apteks" id = "apteka_choice">
+        </select>
+        <br>
+
+        <label for = "price">Укажите цену:</label><br>
+        <input type = "text" id = "price" name = "price" />
+        <br>
+
+        <label for="img_file">Прикрепите фото:</label><br>
+        <input type = "file" id = "img_file" name = "image" />
+        <br>
+
+        <label for = "info_file">Прикрепите файл описание:</label><br>
+        <input type = "file" id = "info_file" name = "info" />
+        <br>
+
+        <input type="submit" value = "Сохранить" />
+    </div>
+    </div>
+
 </form>
 
 
@@ -117,6 +147,7 @@
   				success: function(medikament) {
     			// Execute any logic that should take place after the object is saved.
     			alert('New object created with objectId: ' + medikament.id);
+                    window.location.replace("http://127.0.0.1:8000/medikament/add") ;
   			},
   				error: function(medikament, error) {
     				// Execute any logic that should take place if the save fails.

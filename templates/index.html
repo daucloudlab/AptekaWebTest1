@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
+
+</head>
+<body>
+
+<div class = "container">
+
+    <div class = "col-md-12">
+
+        <div class = "col-md-10" id = "col1">
+            <a href = "http://127.0.0.1:8000/apteka" blank="true">Список аптек </a> <br>
+            <a href = "http://127.0.0.1:8000/apteka/add">Добавить аптеку</a><br>
+            <a href = "http://127.0.0.1:8000/apteka/del">Удалить аптеку</a><br>
+            <a href = "http://127.0.0.1:8000/medikament">Список медикаментов</a><br>
+            <a href = "http://127.0.0.1:8000/medikament/add">Добавить медикамента</a><br>
+            <a href = "http://127.0.0.1:8000/medikament/del">Удалить медикамента</a><br>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>

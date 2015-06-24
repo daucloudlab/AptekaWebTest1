@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -6,13 +7,26 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
+
 </head>
 <body>
 
 <form id = "apteka_delete_form">
-<select name = "apteks" id = "apteka_choice">
-    </select>
-<input type = "submit" id = "submit" value="Удалить" />
+    {% csrf_token %}
+    <div class = "container">
+
+    <div class = "col-md-12">
+
+        <label for = "apteka_choice">Выберите аптеку:</label><br>
+        <select name = "apteks" id = "apteka_choice">
+        </select>
+        <br>
+        <input type = "submit" id = "submit" value="Удалить" />
+    </div>
+    </div>
+
 </form>
 
 <script type="text/javascript">
@@ -72,6 +86,7 @@
                 apteka.destroy({
                     success : function(){
                         alert(" Аптека удалена") ;
+                        window.location.replace("http://127.0.0.1:8000/apteka/") ;
                     },
                     error : function(error){
                         alert("Ошибка! Аптека не удалена!") ;

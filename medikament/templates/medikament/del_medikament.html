@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -6,13 +7,29 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
+
 </head>
 <body>
 
 <form id = "medikament_delete_form">
-<select name = "apteks" id = "apteka_choice"></select>
-    <select name = "medikaments" id = "medikament_choice"></select>
-<input type = "submit" id = "submit" value="Удалить" />
+    {% csrf_token %}
+    <div class = "container">
+
+    <div class = "col-md-12">
+        <label for = "apteka_choice">Выберите аптеку:</label><br>
+        <select name = "apteks" id = "apteka_choice"></select>
+        <br>
+
+        <label for = "medikament_choice">Выберите медикамента:</label><br>
+        <select name = "medikaments" id = "medikament_choice"></select>
+        <br>
+
+        <input type = "submit" id = "submit" value="Удалить" />
+    </div>
+    </div>
+
 </form>
 
 <script type="text/javascript">
@@ -46,7 +63,6 @@
 $("#apteka_choice").change(function (){
     $("#medikament_choice").empty() ;
     var apteka_choice = $("#apteka_choice").val() ;
-    alert("apteka id = " + apteka_choice) ;
     var Medikament = Parse.Object.extend("Medikament");
 	var medikament_query = new Parse.Query(Medikament) ;
     var apteka_query2 = new Parse.Query(Apteka) ;
@@ -85,9 +101,12 @@ $("#apteka_choice").change(function (){
 
         medikament_query_del.get(medikament_choice, {
             success : function(medikament){
-                alert("Медикамент удален") ;
+
                 medikament.destroy({
-                    success : function(){},
+                    success : function(){
+                        alert("Медикамент удален") ;
+                        window.location.replace("http://127.0.0.1:8000/medikament/") ;
+                    },
                     error : function(){}
                 }) ;
 
