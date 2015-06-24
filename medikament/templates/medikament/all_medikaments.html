@@ -7,34 +7,30 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 
+    <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
+    <link href="{% static 'css/bootstrap-theme.min.css' %}" rel = "stylesheet" />
 </head>
 <body>
 
 
 
-<div class = "container">
-    <div class = "col-md-12">
-        <div class = "col-md-4" id = "col1">
-            <h4>Название медикамента</h4>
-        </div>
+<table class="table table-bordered" >
 
-        <div class="col-md-4" id="col2">
-            <h4>Свойства</h4>
-        </div>
+   <thead>
+      <tr>
+         <th>Название</th>
+         <th>Свойства</th>
+         <th>Цена</th>
+          <th>Аптека ID</th>
+          <th>Category ID</th>
+      </tr>
+   </thead>
 
-        <div class = "col-md-1" id="col3">
-            <h4>Цена</h4>
-        </div>
-
-        <div class = "col-md-3" id = "col4">
-            <h4>Аптека</h4>
-        </div>
-
-
-    </div>
-</div>
+   <tbody id = "tbody">
+   </tbody>
+</table>
 
 
 
@@ -45,10 +41,9 @@
       "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
     var Apteka = Parse.Object.extend("Apteka") ;
     var apteka_query = new Parse.Query(Apteka) ;
-
-	var Medikament = Parse.Object.extend("Medikament");
-	var query = new Parse.Query(Medikament) ;
-	query.find(
+    var Medikament = Parse.Object.extend("Medikament");
+    var query = new Parse.Query(Medikament) ;
+    query.find(
             {
                 success : function(results){
                     for(var i = 0; i < results.length; i++){
@@ -56,28 +51,20 @@
                         var title = object.get('title') ;
                         var description = object.get('description') ;
                         var price = object.get('price') ;
-                        $("#col1").append("<a href = 'http://127.0.0.1:8000/medikament/update/" + object.id + "'>" +title + "</a><br>") ;
-                        $("#col2").append(description + "<br>") ;
-                        $("#col3").append(price + "<br>") ;
                         var apteka_rel_object = object.get('apteka_rel') ;
                         var apteka_rel = apteka_rel_object.id ;
+                        var category_id = object.get("category_id") ;
 
-                        apteka_query.get(apteka_rel,{
-                            success : function(apteka){
-                                var apteka_name = apteka.get('name') ;
-                                $("#col4").append(apteka_name + "<br>") ;
-                            },
-                            error : function(apteka, error){
+                        var str1 = "<tr><td><a href = 'http://127.0.0.1:8000/medikament/update/"+apteka_rel+"'>"+title+"</a></td><td>"+description+"</td><td>"+price+"</td>" + "<td>"+apteka_rel+"</td><td>"+category_id+"</td></tr>"  ;
+                        $("#tbody").append(str1) ;
 
-                            }
-                        }) ;
-                    }
+                    } 
 
                 },
                 error : function(error){
+                  alert("Error2") ;
                 }
-            }
-    ) ;
+            }) ;
 
 </script>
 
