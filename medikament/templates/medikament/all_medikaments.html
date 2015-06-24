@@ -56,7 +56,7 @@
                         var title = object.get('title') ;
                         var description = object.get('description') ;
                         var price = object.get('price') ;
-                        $("#col1").append(title + "<br>") ;
+                        $("#col1").append("<a href = 'http://127.0.0.1:8000/medikament/update/" + object.id + "'>" +title + "</a><br>") ;
                         $("#col2").append(description + "<br>") ;
                         $("#col3").append(price + "<br>") ;
                         var apteka_rel_object = object.get('apteka_rel') ;

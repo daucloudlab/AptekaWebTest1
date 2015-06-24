@@ -16,6 +16,7 @@
 <body>
 
 <form id = "apteka_update_form" method="POST">
+    {% csrf_token %}
     <input type = "text" id = "name" name = "name" />
     <input type = "text" id = "phone" name="phone" />
     <input type = "text" id = "address" name = "address" />
@@ -34,11 +35,11 @@
     id = "{{ id }}" ;
     query.get(id,{
         success : function(apteka){
-            old_name = apteka.get('name') ;
-            old_phone = apteka.get('phone') ;
-            old_address = apteka.get('address') ;
-            old_latitude = apteka.get('latitude') ;
-            old_longitude = apteka.get('longitude') ;
+            var old_name = apteka.get('name') ;
+            var old_phone = apteka.get('phone') ;
+            var old_address = apteka.get('address') ;
+            var old_latitude = apteka.get('latitude') ;
+            var old_longitude = apteka.get('longitude') ;
 
             $("#name").attr('value', old_name) ;
             $("#phone").attr('value', old_phone) ;

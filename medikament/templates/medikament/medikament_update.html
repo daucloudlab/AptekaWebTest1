@@ -1,0 +1,184 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
+
+</head>
+<body>
+
+<form id = "medikament_update_form"  enctype="multipart/form-data" method = "POST">
+    {% csrf_token %}
+    <div class = "container">
+
+    <div class = "col-md-10">
+        <label for = "title">Название медикамента: </label><br>
+        <input type = "text" id = "title" name = "title" />
+        <br>
+
+        <label for = "description">Свойства: </label><br>
+        <input type = "text" id = "description" name="description" />
+        <br>
+
+        <label for = "category">Выберите категорию медикамента:</label><br>
+        <select id = "category" name="category">
+            <option value = "1">Лекарственные преператы</option>
+            <option value="2">Травы, фито чаи</option>
+            <option value="3">Добавки и витамины</option>
+            <option value="4">Интим и здоровье</option>
+            <option value="5">Медтехника</option>
+            <option value="6">Для мам и детей</option>
+            <option value="7">Красота и уход</option>
+            <option value="8">Разное</option>
+        </select>
+        <br>
+
+        <label for = "apteka_choice">Выберите аптеку: </label><br>
+        <select name = "apteks" id = "apteka_choice">
+        </select>
+        <br>
+
+        <label for = "price">Укажите цену:</label><br>
+        <input type = "text" id = "price" name = "price" />
+        <br>
+
+        <label for="img_file">Прикрепите фото:</label><br>
+        <input type = "file" id = "img_file" name = "image" />
+        <br>
+
+        <label for = "info_file">Прикрепите файл описание:</label><br>
+        <input type = "file" id = "info_file" name = "info" />
+        <br>
+
+        <input type="submit" value = "Update" />
+    </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+    Parse.initialize("yMnjSWvajnQ10B9oDidOmBA2dH7FrFh4SXeFaXiy",
+      "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
+
+    Apteka = Parse.Object.extend("Apteka");
+	var apteka_query = new Parse.Query(Apteka) ;
+	apteka_query.find(
+            {
+                success : function(results){
+
+                    for(var i = 0; i < results.length; i++){
+                        var object = results[i] ;
+                        var id = object.id ;
+                        var name = object.get('name') ;
+                        $("#apteka_choice").
+                                append("<option value = " + id + ">" + name + "</option>") ;
+                    }
+
+
+                },
+                error : function(error){
+
+                }
+            }
+    ) ;
+
+
+    Medikament = Parse.Object.extend("Medikament");
+	var query = new Parse.Query(Medikament) ;
+    id = "{{ id }}" ;
+    query.get(id,{
+        success : function(medikament){
+            var old_title = medikament.get('title') ;
+            var old_description = medikament.get('description') ;
+            var old_price = medikament.get('price') ;
+
+            $("#title").attr('value', old_title) ;
+            $("#description").attr('value', old_description) ;
+            $("#price").attr('value', old_price) ;
+
+        },
+        error : function(apteka, error){
+
+        }
+    }) ;
+
+    $("#medikament_update_form").on("submit", function(e) {
+        e.preventDefault();
+
+        var title = $("#title").val() ;
+			var description = $("#description").val() ;
+		    var price = parseFloat($("#price").val()) ;
+            var category = $("#category").val() ;
+            var apteka_choice = $("#apteka_choice").val() ;
+
+
+            var img_file_control = $("#img_file")[0] ;
+            if (img_file_control.files.length > 0) {
+                var img_file = img_file_control.files[0];
+                var img_name = "photo.jpg";
+                var parseImageFile = new Parse.File(img_name, img_file);
+
+                parseImageFile.save().then(function () {
+                    // The file has been saved to Parse.
+
+                }, function (error) {
+                    // The file either could not be read, or could not be saved to Parse.
+
+                });
+            }
+
+
+            var info_file_control = $("#info_file")[0] ;
+            if (info_file_control.files.length > 0) {
+                var info_file = info_file_control.files[0];
+                var info_name = "info.txt";
+                var parseInfoFile = new Parse.File(info_name, info_file);
+
+                parseInfoFile.save().then(function () {
+                    // The file has been saved to Parse.
+
+                }, function (error) {
+                    // The file either could not be read, or could not be saved to Parse.
+
+                });
+            }
+
+        var update_query = new Parse.Query(Medikament) ;
+        var apteka_update = new Apteka() ;
+        update_query.get(id,{
+        success : function(medikament){
+            medikament.set("title", title);
+			medikament.set("description", description);
+            medikament.set("price", price) ;
+            medikament.set("category_id", category) ;
+            apteka_update.id = apteka_choice ;
+            medikament.set("apteka_rel", apteka_update) ;
+            medikament.set("image", parseImageFile) ;
+            medikament.set("information", parseInfoFile) ;
+            medikament.save() ;
+            alert("Данные медикамента обновился") ;
+            window.location.replace("http://127.0.0.1:8000/medikament/") ;
+        },
+        error : function(apteka, error){
+            alert("Ошибка при обновлений " + error.description) ;
+        }
+    }) ;
+
+
+
+
+    }) ;
+
+
+</script>
+
+</body>
+</html>
