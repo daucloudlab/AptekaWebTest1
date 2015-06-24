@@ -8,47 +8,43 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 
-
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
-
+    <link href="{% static 'css/bootstrap-theme.min.css' %}" rel = "stylesheet" />
+    
 </head>
 <body>
-<form id = "apteka_add_form"     method="POST">
+
+<div class = "container top">
+
+<form id = "apteka_add_form"     method="POST" role = "form">
     {% csrf_token %}
-<div class = "container">
+<div class = "form-group">
+    <label for = "name">Название аптеки: </label>
+    <input type = "text" class = "form-control input-lg" id = "name" name = "name" />
+</div>
+<div class = "form-group">
+    <label for = "phone">Номер телефона аптеки(с кодом): </label>
+    <input type = "text" class = "form-control input-lg" id = "phone" name="phone" />
+</div>
+<div class = "form-group">
+    <label for = "address">Адрес аптеки: </label>
+    <input type = "text" class = "form-control input-lg" id = "address" name = "address" />
+</div>
+<div class = "form-group">
+    <label for = "latitude">Latitude: </label>
+    <input type = "text" class = "form-control input-lg" id = "latitude" name = "latitude" />
+</div>
+<div class = "form-group">
+    <label for = "longitude">Longitude: </label>
+    <input type = "text" class = "form-control input-lg" id = "longitude" name = "longitude" /> 
+</div> 
 
-    <div class = "col-md-12">
-
-        <div class = "col-md-10" id = "col1">
-            <label for = "name">Название аптеки: </label> <br>
-            <input type = "text" id = "name" name = "name" />
-            <br>
-
-            <label for = "phone">Номер телефона аптеки(с кодом): </label><br>
-            <input type = "text" id = "phone" name="phone" />
-            <br>
-
-            <label for = "address">Адрес аптеки: </label><br>
-            <input type = "text" id = "address" name = "address" />
-            <br>
-
-            <label for = "latitude">Latitude: </label><br>
-            <input type = "text" id = "latitude" name = "latitude" />
-            <br>
-
-            <label for = "longitude">Longitude: </label><br>
-            <input type = "text" id = "longitude" name = "longitude" />
-            <br>
-            <input type="submit" value = "Сохранить" />
-        </div>
-
-
-    </div>
-    </div>
+<button type="submit" class = "btn btn-default">Сохранить </button>
+        
 </form>
 
-
+</div>
 
 
 
