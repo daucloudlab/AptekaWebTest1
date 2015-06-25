@@ -111,13 +111,11 @@
     var Medikament1 = Parse.Object.extend("Medikament");
     var med_query = new Parse.Query(Medikament1) ;
     id = "{{ id }}" ;
-    alert("id = " + id) ;
     med_query.get(id,{
         success : function(medikament){
             var old_title = medikament.get('title') ;
             var old_description = medikament.get('description') ;
             var old_price = medikament.get('price') ;
-            alert("old_title = " + old_title) ;
             $("#title").attr('value', old_title) ;
             $("#description").attr('value', old_description) ;
             $("#price").attr('value', old_price) ;
@@ -145,13 +143,7 @@
                 var img_name = "photo.jpg";
                 parseImageFile = new Parse.File(img_name, img_file);
 
-                parseImageFile.save().then(function () {
-                    // The file has been saved to Parse.
 
-                }, function (error) {
-                    // The file either could not be read, or could not be saved to Parse.
-
-                });
             }
 
 
@@ -161,13 +153,7 @@
                 var info_name = "info.txt";
                 parseInfoFile = new Parse.File(info_name, info_file);
 
-                parseInfoFile.save().then(function () {
-                    // The file has been saved to Parse.
 
-                }, function (error) {
-                    // The file either could not be read, or could not be saved to Parse.
-
-                });
             }
 
         var Medikament2 = Parse.Object.extend("Medikament");
@@ -182,9 +168,27 @@
             medikament.set("category_id", category) ;
             apteka_update.id = apteka_choice ;
             medikament.set("apteka_rel", apteka_update) ;
+
+            parseImageFile.save().then(function () {
+                    // The file has been saved to Parse.
+                    alert("parseImageFile saved") ;
+
+                }, function (error) {
+                    // The file either could not be read, or could not be saved to Parse.
+                    alert("parseImageFile error") ;
+                });
             medikament.set("image", parseImageFile) ;
+
+            parseInfoFile.save().then(function () {
+                    // The file has been saved to Parse.
+                    alert("parseInfoFile saved") ;
+                }, function (error) {
+                    // The file either could not be read, or could not be saved to Parse.
+                    alert("parseInfoFile error") ;
+                });
             medikament.set("information", parseInfoFile) ;
             medikament.save() ;
+            alert("new title = " + title) ;
             alert("Данные медикамента обновился") ;
             window.location.replace("http://127.0.0.1:8000/medikament/") ;
         },
