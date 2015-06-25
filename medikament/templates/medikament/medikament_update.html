@@ -11,7 +11,6 @@
 
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <link href="{% static 'css/bootstrap.min.css' %}" rel = "stylesheet" />
-    <link href="{% static 'css/bootstrap-theme.min.css' %}" rel = "stylesheet" />
 
 </head>
 <body>
@@ -86,8 +85,8 @@
     Parse.initialize("yMnjSWvajnQ10B9oDidOmBA2dH7FrFh4SXeFaXiy",
       "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
 
-    var Apteka = Parse.Object.extend("Apteka");
-	var apteka_query = new Parse.Query(Apteka) ;
+    var Apteka1 = Parse.Object.extend("Apteka");
+	var apteka_query = new Parse.Query(Apteka1) ;
 	apteka_query.find(
             {
                 success : function(results){
@@ -109,25 +108,26 @@
     ) ;
 
 
-    var Medikament = Parse.Object.extend("Medikament");
-	var med_query = new Parse.Query(Medikament) ;
+    var Medikament1 = Parse.Object.extend("Medikament");
+	var med_query = new Parse.Query(Medikament1) ;
     id = "{{ id }}" ;
-    alert("id = "+id) ;
+    alert("id = " + id) ;
     med_query.get(id,{
         success : function(medikament){
             var old_title = medikament.get('title') ;
             var old_description = medikament.get('description') ;
             var old_price = medikament.get('price') ;
-            alert('old_title = ' + old_title) ;
+            alert("old_title = " + old_title) ;
             $("#title").attr('value', old_title) ;
             $("#description").attr('value', old_description) ;
             $("#price").attr('value', old_price) ;
 
         },
         error : function(medikament, error){
-
+            alert("med_query_ERROR! " + error.description) ;
         }
     }) ;
+
 
     $("#medikament_update_form").on("submit", function(e) {
         e.preventDefault();
@@ -143,7 +143,7 @@
             if (img_file_control.files.length > 0) {
                 var img_file = img_file_control.files[0];
                 var img_name = "photo.jpg";
-                var parseImageFile = new Parse.File(img_name, img_file);
+                parseImageFile = new Parse.File(img_name, img_file);
 
                 parseImageFile.save().then(function () {
                     // The file has been saved to Parse.
@@ -159,7 +159,7 @@
             if (info_file_control.files.length > 0) {
                 var info_file = info_file_control.files[0];
                 var info_name = "info.txt";
-                var parseInfoFile = new Parse.File(info_name, info_file);
+                parseInfoFile = new Parse.File(info_name, info_file);
 
                 parseInfoFile.save().then(function () {
                     // The file has been saved to Parse.
@@ -171,10 +171,10 @@
             }
 
         var Medikament2 = Parse.Object.extend("Medikament");
-        var update_query = new Parse.Query(Medikament2) ;
+        var update_med_query = new Parse.Query(Medikament2) ;
         var Apteka2 = Parse.Object.extend("Apteka");
         var apteka_update = new Apteka2() ;
-        update_query.get(id,{
+        update_med_query.get(id,{
         success : function(medikament){
             medikament.set("title", title);
 			medikament.set("description", description);
