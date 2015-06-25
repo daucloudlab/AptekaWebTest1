@@ -14,9 +14,23 @@
 </head>
 <body>
 
+<div class="panel panel-default">
+
+   <div class="panel-body">
+      <ul class="list-inline center-block text-center">
+          <li class="active"><a href="http://127.0.0.1:8000/apteka">Список аптек</a></li>
+          <li><a href="http://127.0.0.1:8000/apteka/add">Добавить аптеку</a></li>
+          <li><a href="http://127.0.0.1:8000/apteka/del">Удалить аптеку</a></li>
+          <li><a href="http://127.0.0.1:8000/medikament">Список медикаментов</a></li>
+          <li><a href="http://127.0.0.1:8000/medikament/add">Добавить медикамента</a></li>
+          <li><a href="http://127.0.0.1:8000/medikament/del">Удалить медикамента</a></li>
+        </ul>
+   </div>
+</div>
 
 
-<table class="table table-bordered" >
+
+<table class="table table-striped" >
 
    <thead>
       <tr>
@@ -25,6 +39,7 @@
          <th>Цена</th>
           <th>Аптека ID</th>
           <th>Category ID</th>
+          <th></th>
       </tr>
    </thead>
 
@@ -55,7 +70,8 @@
                         var apteka_rel = apteka_rel_object.id ;
                         var category_id = object.get("category_id") ;
 
-                        var str1 = "<tr><td><a href = 'http://127.0.0.1:8000/medikament/update/"+apteka_rel+"'>"+title+"</a></td><td>"+description+"</td><td>"+price+"</td>" + "<td>"+apteka_rel+"</td><td>"+category_id+"</td></tr>"  ;
+                        var str1 = "<tr><td>"+title+"</td><td>"+description+"</td><td>"+price+"</td>" + "<td>"+apteka_rel+"</td><td>"+category_id+"</td>" +
+                                "<td><a href = 'http://127.0.0.1:8000/medikament/update/"+apteka_rel+"' class='btn btn-primary btn-sm' role='button'>Редактировать</a></td></tr>" ;
                         $("#tbody").append(str1) ;
 
                     } 

@@ -16,6 +16,20 @@
 </head>
 <body>
 
+<div class="panel panel-default">
+
+   <div class="panel-body">
+      <ul class="list-inline center-block text-center">
+          <li class="active"><a href="http://127.0.0.1:8000/apteka">Список аптек</a></li>
+          <li><a href="http://127.0.0.1:8000/apteka/add">Добавить аптеку</a></li>
+          <li><a href="http://127.0.0.1:8000/apteka/del">Удалить аптеку</a></li>
+          <li><a href="http://127.0.0.1:8000/medikament">Список медикаментов</a></li>
+          <li><a href="http://127.0.0.1:8000/medikament/add">Добавить медикамента</a></li>
+          <li><a href="http://127.0.0.1:8000/medikament/del">Удалить медикамента</a></li>
+        </ul>
+   </div>
+</div>
+
 
 <table class="table table-striped" >
 
@@ -27,7 +41,7 @@
          <th>Latitude</th>
          <th>Longitude</th>
           <th></th>
-          <th></th>
+
       </tr>
    </thead>
 
@@ -58,8 +72,7 @@
 
                         $("#tbody").append("<tr><td>"+aptekaName+"</td>"+
                                         "<td>"+aptekaPhone+"</td>"+"<td>"+address+"</td>"+"<td>"+latitude+"</td>"+"<td>"+longitude+"</td>"+
-                                        "<td><a href = 'http://127.0.0.1:8000/apteka/update/"+object.id+"' class='btn btn-primary btn-sm' role='button'>Редактировать</a></td>"+
-                                        "<td><a href = 'http://127.0.0.1:8000/apteka/del/'"+" class = 'btn btn-danger btn-sm' role='button'>Удалить</a></td>"+"</tr>") ;
+                                        "<td><a href = 'http://127.0.0.1:8000/apteka/update/"+object.id+"' class='btn btn-primary btn-sm' role='button'>Редактировать</a></td></tr>") ;
                     }
 
                 },
