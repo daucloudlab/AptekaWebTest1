@@ -71,7 +71,7 @@
                         var category_id = object.get("category_id") ;
 
                         var str1 = "<tr><td>"+title+"</td><td>"+description+"</td><td>"+price+"</td>" + "<td>"+apteka_rel+"</td><td>"+category_id+"</td>" +
-                                "<td><a href = 'http://127.0.0.1:8000/medikament/update/"+apteka_rel+"' class='btn btn-primary btn-sm' role='button'>Редактировать</a></td></tr>" ;
+                                "<td><a href = 'http://127.0.0.1:8000/medikament/update/"+object.id+"/' class='btn btn-primary btn-sm' role='button'>Редактировать</a></td></tr>" ;
                         $("#tbody").append(str1) ;
 
                     } 

@@ -86,8 +86,8 @@
       "tiGZjISmsliHuQXSxbW4YzWRA9aagyfOKWwTyyYW");
 
     var Apteka1 = Parse.Object.extend("Apteka");
-	var apteka_query = new Parse.Query(Apteka1) ;
-	apteka_query.find(
+    var apteka_query = new Parse.Query(Apteka1) ;
+    apteka_query.find(
             {
                 success : function(results){
 
@@ -109,7 +109,7 @@
 
 
     var Medikament1 = Parse.Object.extend("Medikament");
-	var med_query = new Parse.Query(Medikament1) ;
+    var med_query = new Parse.Query(Medikament1) ;
     id = "{{ id }}" ;
     alert("id = " + id) ;
     med_query.get(id,{
@@ -132,9 +132,9 @@
     $("#medikament_update_form").on("submit", function(e) {
         e.preventDefault();
 
-        var title = $("#title").val() ;
-			var description = $("#description").val() ;
-		    var price = parseFloat($("#price").val()) ;
+            var title = $("#title").val() ;
+            var description = $("#description").val() ;
+            var price = parseFloat($("#price").val()) ;
             var category = $("#category").val() ;
             var apteka_choice = $("#apteka_choice").val() ;
 
@@ -177,7 +177,7 @@
         update_med_query.get(id,{
         success : function(medikament){
             medikament.set("title", title);
-			medikament.set("description", description);
+            medikament.set("description", description);
             medikament.set("price", price) ;
             medikament.set("category_id", category) ;
             apteka_update.id = apteka_choice ;
